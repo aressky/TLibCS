@@ -5,6 +5,7 @@
  *  @generated
  */
 
+using System;
 using TLibCS.Protocol;
 
 namespace TLibCS.Creation

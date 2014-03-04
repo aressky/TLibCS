@@ -5,6 +5,7 @@
  *  @generated
  */
 
+using System;
 using TLibCS.Protocol;
 
 namespace TLibCS.Creation
@@ -262,6 +263,12 @@ namespace TLibCS.Creation
 						reader.Read(out e);
 						this._mid = (message_id_e)e;
 				}
+				else
+				{
+					string es;
+					reader.Read(out es);
+					this._mid = (message_id_e)Enum.Parse(typeof(message_id_e), es);
+				}
 				reader.ReadFieldEnd("mid");
 			}
 
@@ -285,6 +292,10 @@ namespace TLibCS.Creation
 				if(writer.WriteFieldBegin("mid"))
 				{
 					writer.Write((int)this._mid);
+				}
+				else
+				{
+					writer.Write(this._mid.ToString());
 				}
 				writer.WriteFieldEnd("mid");
 			}
@@ -365,6 +376,12 @@ namespace TLibCS.Creation
 						reader.Read(out e);
 						this._level = (tconnd_instance_level_e)e;
 				}
+				else
+				{
+					string es;
+					reader.Read(out es);
+					this._level = (tconnd_instance_level_e)Enum.Parse(typeof(tconnd_instance_level_e), es);
+				}
 				reader.ReadFieldEnd("level");
 			}
 
@@ -412,6 +429,10 @@ namespace TLibCS.Creation
 				if(writer.WriteFieldBegin("level"))
 				{
 					writer.Write((int)this._level);
+				}
+				else
+				{
+					writer.Write(this._level.ToString());
 				}
 				writer.WriteFieldEnd("level");
 			}
@@ -708,6 +729,12 @@ namespace TLibCS.Creation
 						reader.Read(out e);
 						this._type = (item_type_e)e;
 				}
+				else
+				{
+					string es;
+					reader.Read(out es);
+					this._type = (item_type_e)Enum.Parse(typeof(item_type_e), es);
+				}
 				reader.ReadFieldEnd("type");
 			}
 
@@ -763,6 +790,10 @@ namespace TLibCS.Creation
 				if(writer.WriteFieldBegin("type"))
 				{
 					writer.Write((int)this._type);
+				}
+				else
+				{
+					writer.Write(this._type.ToString());
 				}
 				writer.WriteFieldEnd("type");
 			}

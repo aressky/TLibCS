@@ -22,7 +22,7 @@ namespace Example
 
             item0.id = 1;
             item0.name = "倚天剑";
-            item0.type = item_type_e.e_crystal;
+            item0.type = item_type_e.e_other;
             item0.limit_list = new item_limit_u[2];
             item0.limit_list[0] = new item_limit_u();
             item0.limit_list[0].level = 123;
