@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO; 
 
 using TLibCS.Protocol;
@@ -12,11 +10,11 @@ namespace Example
 {
     class Example
     {
-        static void Main(string[] args)
+        static void TestCompact()
         {
             MemoryStream memsout = new MemoryStream();
             TCompactWriter compact_writer = new TCompactWriter(memsout);
-            
+
             item_table_s item0 = new item_table_s();
             item_table_s item1 = new item_table_s();
 
@@ -37,9 +35,14 @@ namespace Example
 
 
             TCompactReader compact_reader = new TCompactReader(memsin);
-            
+
 
             item1.Read(compact_reader);
+        }
+        
+        static void Main(string[] args)
+        {
+            TestCompact();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TLibCS.Protocol
 {
-    class TProtocolException : Exception
+    public class TProtocolException : Exception
     {
         public const int TLIBCS_NOERROR = 0;
         public const int TLIBCS_OUT_OF_MEMORY = 0;
