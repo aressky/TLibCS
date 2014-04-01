@@ -41,13 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="gen\common_types.cs" />
+    <Compile Include="gen\protocol_types.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Example.cs" />
-    <Compile Include="proto\common_types.cs" />
-    <Compile Include="proto\protocol_types.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="proto\common\common.td" />
+    <None Include="proto\protocol.td" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TLibCS\TLibCS.csproj">
@@ -56,6 +58,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>find . -name "*.td" | xargs tdata -o ../gen/ -gen cs</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
