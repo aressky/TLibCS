@@ -12,13 +12,13 @@ namespace TLibCS.Creation
 {
 
 
-	public enum message_id_e
+	public enum message_id
 	{
 		E_MID_LOGIN_REQ = 0,
 		E_MID_LOGIN_RSP = 1,
 	};
 
-//用MESSAGE_ID_NUM来记录枚举类型message_id_e中的成员个数, count函数可以对struct, union, enum这三种类型使用
+//用MESSAGE_ID_NUM来记录枚举类型message_id中的成员个数, count函数可以对struct, union, enum这三种类型使用
 	public static partial class Constants
 	{
 		public const uint MESSAGE_ID_NUM = 2		;

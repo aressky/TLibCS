@@ -11,7 +11,7 @@ using TLibCS.Protocol;
 namespace TLibCS.Creation
 {
 
-	public partial class login_req_s
+	public partial class login_req
 	{
 		private string _name;
 		public string name
@@ -37,7 +37,7 @@ namespace TLibCS.Creation
 		public void Read(TReader reader)
 		{
 
-			reader.ReadStructBegin("login_req_s");
+			reader.ReadStructBegin("login_req");
 			{
 				if(reader.ReadFieldBegin("name"))
 				{
@@ -63,13 +63,13 @@ namespace TLibCS.Creation
 			}
 
 
-			reader.ReadStructEnd("login_req_s");
+			reader.ReadStructEnd("login_req");
 		}
 
 		public void Write(TWriter writer)
 		{
 		
-			writer.WriteStructBegin("login_req_s");
+			writer.WriteStructBegin("login_req");
 			{
 				if(writer.WriteFieldBegin("name"))
 				{
@@ -95,11 +95,11 @@ namespace TLibCS.Creation
 			}
 
 
-			writer.WriteStructEnd("login_req_s");
+			writer.WriteStructEnd("login_req");
 		}
 	}
 
-	public partial class login_rsp_s
+	public partial class login_rsp
 	{
 		private int _result; //0表示成功， 非0表示失败
 		public int result
@@ -118,7 +118,7 @@ namespace TLibCS.Creation
 		public void Read(TReader reader)
 		{
 
-			reader.ReadStructBegin("login_rsp_s");
+			reader.ReadStructBegin("login_rsp");
 			{
 				if(reader.ReadFieldBegin("result"))
 				{
@@ -137,13 +137,13 @@ namespace TLibCS.Creation
 			}
 
 
-			reader.ReadStructEnd("login_rsp_s");
+			reader.ReadStructEnd("login_rsp");
 		}
 
 		public void Write(TWriter writer)
 		{
 		
-			writer.WriteStructBegin("login_rsp_s");
+			writer.WriteStructBegin("login_rsp");
 			{
 				if(writer.WriteFieldBegin("result"))
 				{
@@ -162,43 +162,43 @@ namespace TLibCS.Creation
 			}
 
 
-			writer.WriteStructEnd("login_rsp_s");
+			writer.WriteStructEnd("login_rsp");
 		}
 	}
 
-	public partial class message_body_u
+	public partial class message_body
 	{
-		private login_req_s _login_req;
-		public login_req_s login_req
+		private login_req _login_req;
+		public login_req login_req
 		{
 			get { return _login_req; }
 			set { _login_req = value; }
 		}
 
-		private login_rsp_s _login_rsp;
-		public login_rsp_s login_rsp
+		private login_rsp _login_rsp;
+		public login_rsp login_rsp
 		{
 			get { return _login_rsp; }
 			set { _login_rsp = value; }
 		}
 
-		public void Read(TReader reader, message_id_e selector)
+		public void Read(TReader reader, message_id selector)
 		{
-			reader.ReadUnionBegin("message_body_u");
+			reader.ReadUnionBegin("message_body");
 			switch(selector)
 			{
-			case message_id_e.E_MID_LOGIN_REQ:
+			case message_id.E_MID_LOGIN_REQ:
 				if(reader.ReadFieldBegin("login_req"))
 				{
-					this._login_req = new login_req_s();
+					this._login_req = new login_req();
 					this._login_req.Read(reader);
 				}
 				reader.ReadFieldEnd("login_req");
 				break;
-			case message_id_e.E_MID_LOGIN_RSP:
+			case message_id.E_MID_LOGIN_RSP:
 				if(reader.ReadFieldBegin("login_rsp"))
 				{
-					this._login_rsp = new login_rsp_s();
+					this._login_rsp = new login_rsp();
 					this._login_rsp.Read(reader);
 				}
 				reader.ReadFieldEnd("login_rsp");
@@ -206,22 +206,22 @@ namespace TLibCS.Creation
 			default:
 				break;
 			}
-			reader.ReadUnionEnd("message_body_u");
+			reader.ReadUnionEnd("message_body");
 		}
 
-		public void Write(TWriter writer, message_id_e selector)
+		public void Write(TWriter writer, message_id selector)
 		{
-			writer.WriteUnionBegin("message_body_u");
+			writer.WriteUnionBegin("message_body");
 			switch(selector)
 			{
-			case message_id_e.E_MID_LOGIN_REQ:
+			case message_id.E_MID_LOGIN_REQ:
 				if(writer.WriteFieldBegin("login_req"))
 				{
 					this._login_req.Write(writer);
 				}
 				writer.WriteFieldEnd("login_req");
 				break;
-			case message_id_e.E_MID_LOGIN_RSP:
+			case message_id.E_MID_LOGIN_RSP:
 				if(writer.WriteFieldBegin("login_rsp"))
 				{
 					this._login_rsp.Write(writer);
@@ -231,22 +231,22 @@ namespace TLibCS.Creation
 			default:
 				break;
 			}
-			writer.WriteUnionEnd("message_body_u");
+			writer.WriteUnionEnd("message_body");
 		}
 	}
 
 //定义网络协议
-	public partial class message_s
+	public partial class message
 	{
-		private message_id_e _mid;
-		public message_id_e mid
+		private message_id _mid;
+		public message_id mid
 		{
 			get { return _mid; }
 			set { _mid = value; }
 		}
 
-		private message_body_u _body;
-		public message_body_u body
+		private message_body _body;
+		public message_body body
 		{
 			get { return _body; }
 			set { _body = value; }
@@ -255,19 +255,19 @@ namespace TLibCS.Creation
 		public void Read(TReader reader)
 		{
 
-			reader.ReadStructBegin("message_s");
+			reader.ReadStructBegin("message");
 			{
 				if(reader.ReadFieldBegin("mid"))
 				{
 						int e;
 						reader.Read(out e);
-						this._mid = (message_id_e)e;
+						this._mid = (message_id)e;
 				}
 				else
 				{
 					string es;
 					reader.Read(out es);
-					this._mid = (message_id_e)Enum.Parse(typeof(message_id_e), es);
+					this._mid = (message_id)Enum.Parse(typeof(message_id), es);
 				}
 				reader.ReadFieldEnd("mid");
 			}
@@ -281,13 +281,13 @@ namespace TLibCS.Creation
 			}
 
 
-			reader.ReadStructEnd("message_s");
+			reader.ReadStructEnd("message");
 		}
 
 		public void Write(TWriter writer)
 		{
 		
-			writer.WriteStructBegin("message_s");
+			writer.WriteStructBegin("message");
 			{
 				if(writer.WriteFieldBegin("mid"))
 				{
@@ -309,12 +309,12 @@ namespace TLibCS.Creation
 			}
 
 
-			writer.WriteStructEnd("message_s");
+			writer.WriteStructEnd("message");
 		}
 	}
 
 
-	public enum tconnd_instance_level_e
+	public enum tconnd_instance_level
 	{
 		e_low = 0,
 		e_high = 1,
@@ -328,10 +328,10 @@ namespace TLibCS.Creation
 	{
 		public const uint IP_LENGTH = 16		;
 	}
-	public partial class tconnd_instance_config_s
+	public partial class tconnd_instance_config
 	{
-		private tconnd_instance_level_e _level;
-		public tconnd_instance_level_e level
+		private tconnd_instance_level _level;
+		public tconnd_instance_level level
 		{
 			get { return _level; }
 			set { _level = value; }
@@ -368,19 +368,19 @@ namespace TLibCS.Creation
 		public void Read(TReader reader)
 		{
 
-			reader.ReadStructBegin("tconnd_instance_config_s");
+			reader.ReadStructBegin("tconnd_instance_config");
 			{
 				if(reader.ReadFieldBegin("level"))
 				{
 						int e;
 						reader.Read(out e);
-						this._level = (tconnd_instance_level_e)e;
+						this._level = (tconnd_instance_level)e;
 				}
 				else
 				{
 					string es;
 					reader.Read(out es);
-					this._level = (tconnd_instance_level_e)Enum.Parse(typeof(tconnd_instance_level_e), es);
+					this._level = (tconnd_instance_level)Enum.Parse(typeof(tconnd_instance_level), es);
 				}
 				reader.ReadFieldEnd("level");
 			}
@@ -418,13 +418,13 @@ namespace TLibCS.Creation
 			}
 
 
-			reader.ReadStructEnd("tconnd_instance_config_s");
+			reader.ReadStructEnd("tconnd_instance_config");
 		}
 
 		public void Write(TWriter writer)
 		{
 		
-			writer.WriteStructBegin("tconnd_instance_config_s");
+			writer.WriteStructBegin("tconnd_instance_config");
 			{
 				if(writer.WriteFieldBegin("level"))
 				{
@@ -470,11 +470,11 @@ namespace TLibCS.Creation
 			}
 
 
-			writer.WriteStructEnd("tconnd_instance_config_s");
+			writer.WriteStructEnd("tconnd_instance_config");
 		}
 	}
 
-	public partial class tconnd_config_s
+	public partial class tconnd_config
 	{
 		private string _log_config;
 		public string log_config
@@ -484,8 +484,8 @@ namespace TLibCS.Creation
 		}
 
 		private uint _instance_config_num;
-		private tconnd_instance_config_s		[] _instance_config;
-		public tconnd_instance_config_s		[] instance_config
+		private tconnd_instance_config		[] _instance_config;
+		public tconnd_instance_config		[] instance_config
 		{
 			get { return _instance_config; }
 			set { _instance_config = value; }
@@ -494,7 +494,7 @@ namespace TLibCS.Creation
 		public void Read(TReader reader)
 		{
 
-			reader.ReadStructBegin("tconnd_config_s");
+			reader.ReadStructBegin("tconnd_config");
 			{
 				if(reader.ReadFieldBegin("log_config"))
 				{
@@ -509,7 +509,7 @@ namespace TLibCS.Creation
 				if (reader.ReadFieldBegin("instance_config_num"))
 				{
 					reader.Read(out this._instance_config_num);
-					this._instance_config = new tconnd_instance_config_s[this._instance_config_num];
+					this._instance_config = new tconnd_instance_config[this._instance_config_num];
 				}
 				reader.ReadFieldEnd("instance_config_num");
 
@@ -519,7 +519,7 @@ namespace TLibCS.Creation
 
 					if(reader.ReadVectorElementBegin("instance_config", i))
 					{
-					this._instance_config[i] = new tconnd_instance_config_s();
+					this._instance_config[i] = new tconnd_instance_config();
 					this._instance_config[i].Read(reader				);
 					}
 					reader.ReadVectorElementEnd("instance_config", i);
@@ -528,13 +528,13 @@ namespace TLibCS.Creation
 			}
 
 
-			reader.ReadStructEnd("tconnd_config_s");
+			reader.ReadStructEnd("tconnd_config");
 		}
 
 		public void Write(TWriter writer)
 		{
 		
-			writer.WriteStructBegin("tconnd_config_s");
+			writer.WriteStructBegin("tconnd_config");
 			{
 				if(writer.WriteFieldBegin("log_config"))
 				{
@@ -567,262 +567,728 @@ namespace TLibCS.Creation
 			}
 
 
-			writer.WriteStructEnd("tconnd_config_s");
+			writer.WriteStructEnd("tconnd_config");
 		}
 	}
 
 
-	public enum item_type_e
+	public enum item_type
 	{
-		e_crystal = 0,
-		e_ectype = 1,
-		e_other = 2,
+		crystal = 0,
+		other = 1,
 	};
-
-	public partial class item_limit_u
-	{
-		private uint _level;
-		public uint level
-		{
-			get { return _level; }
-			set { _level = value; }
-		}
-
-		private uint _mapid;
-		public uint mapid
-		{
-			get { return _mapid; }
-			set { _mapid = value; }
-		}
-
-		private uint _gold;
-		public uint gold
-		{
-			get { return _gold; }
-			set { _gold = value; }
-		}
-
-		public void Read(TReader reader, item_type_e selector)
-		{
-			reader.ReadUnionBegin("item_limit_u");
-			switch(selector)
-			{
-			case item_type_e.e_crystal:
-				if(reader.ReadFieldBegin("level"))
-				{
-					reader.Read(out this._level);
-				}
-				reader.ReadFieldEnd("level");
-				break;
-			case item_type_e.e_ectype:
-				if(reader.ReadFieldBegin("mapid"))
-				{
-					reader.Read(out this._mapid);
-				}
-				reader.ReadFieldEnd("mapid");
-				break;
-			case item_type_e.e_other:
-				if(reader.ReadFieldBegin("gold"))
-				{
-					reader.Read(out this._gold);
-				}
-				reader.ReadFieldEnd("gold");
-				break;
-			default:
-				break;
-			}
-			reader.ReadUnionEnd("item_limit_u");
-		}
-
-		public void Write(TWriter writer, item_type_e selector)
-		{
-			writer.WriteUnionBegin("item_limit_u");
-			switch(selector)
-			{
-			case item_type_e.e_crystal:
-				if(writer.WriteFieldBegin("level"))
-				{
-					writer.Write(this._level);
-				}
-				writer.WriteFieldEnd("level");
-				break;
-			case item_type_e.e_ectype:
-				if(writer.WriteFieldBegin("mapid"))
-				{
-					writer.Write(this._mapid);
-				}
-				writer.WriteFieldEnd("mapid");
-				break;
-			case item_type_e.e_other:
-				if(writer.WriteFieldBegin("gold"))
-				{
-					writer.Write(this._gold);
-				}
-				writer.WriteFieldEnd("gold");
-				break;
-			default:
-				break;
-			}
-			writer.WriteUnionEnd("item_limit_u");
-		}
-	}
 
 	public static partial class Constants
 	{
-		public const uint ITEM_MAX_LIMIT = 10		;
+		public const uint ITEM_NAME_LENGTH = 1024		;
 	}
-	public partial class item_table_s
+	public static partial class Constants
 	{
-		private ulong _id;
-		public ulong id
+		public const uint ITEM_VEC_NUM = 10		;
+	}
+	public partial class item_table
+	{
+		private uint _ID;
+		public uint ID
 		{
-			get { return _id; }
-			set { _id = value; }
+			get { return _ID; }
+			set { _ID = value; }
 		}
 
-		private string _name;
-		public string name
+		private string _ItemName;
+		public string ItemName
 		{
-			get { return _name; }
-			set { _name = value; }
+			get { return _ItemName; }
+			set { _ItemName = value; }
 		}
 
-		private item_type_e _type;
-		public item_type_e type
+		private int _Metempsychosis;
+		public int Metempsychosis
 		{
-			get { return _type; }
-			set { _type = value; }
+			get { return _Metempsychosis; }
+			set { _Metempsychosis = value; }
 		}
 
-		private uint _limit_list_num;
-		private item_limit_u		[] _limit_list; //一般来说不要把union类型作为数组， 这里只是演示下union类型是可以作为数组的。
-		public item_limit_u		[] limit_list
+		private uint _UseTime;
+		public uint UseTime
 		{
-			get { return _limit_list; }
-			set { _limit_list = value; }
+			get { return _UseTime; }
+			set { _UseTime = value; }
+		}
+
+		private uint _Bill;
+		public uint Bill
+		{
+			get { return _Bill; }
+			set { _Bill = value; }
+		}
+
+		private ushort _ReplaceItem;
+		public ushort ReplaceItem
+		{
+			get { return _ReplaceItem; }
+			set { _ReplaceItem = value; }
+		}
+
+		private int _Medals;
+		public int Medals
+		{
+			get { return _Medals; }
+			set { _Medals = value; }
+		}
+
+		private int _Value;
+		public int Value
+		{
+			get { return _Value; }
+			set { _Value = value; }
+		}
+
+		private int _ReserveMoneyFlag;
+		public int ReserveMoneyFlag
+		{
+			get { return _ReserveMoneyFlag; }
+			set { _ReserveMoneyFlag = value; }
+		}
+
+		private byte _Quality;
+		public byte Quality
+		{
+			get { return _Quality; }
+			set { _Quality = value; }
+		}
+
+		private item_type _ItemType;
+		public item_type ItemType
+		{
+			get { return _ItemType; }
+			set { _ItemType = value; }
+		}
+
+		private uint _UseSingTime;
+		public uint UseSingTime
+		{
+			get { return _UseSingTime; }
+			set { _UseSingTime = value; }
+		}
+
+		private uint _UserTarget;
+		public uint UserTarget
+		{
+			get { return _UserTarget; }
+			set { _UserTarget = value; }
+		}
+
+		private uint _CanMoved;
+		public uint CanMoved
+		{
+			get { return _CanMoved; }
+			set { _CanMoved = value; }
+		}
+
+		private uint _CanDeleted;
+		public uint CanDeleted
+		{
+			get { return _CanDeleted; }
+			set { _CanDeleted = value; }
+		}
+
+		private uint _CanTrade;
+		public uint CanTrade
+		{
+			get { return _CanTrade; }
+			set { _CanTrade = value; }
+		}
+
+		private uint _CanSold;
+		public uint CanSold
+		{
+			get { return _CanSold; }
+			set { _CanSold = value; }
+		}
+
+		private uint _CanStored;
+		public uint CanStored
+		{
+			get { return _CanStored; }
+			set { _CanStored = value; }
+		}
+
+		private uint _CanLocked;
+		public uint CanLocked
+		{
+			get { return _CanLocked; }
+			set { _CanLocked = value; }
+		}
+
+		private uint _CanBound;
+		public uint CanBound
+		{
+			get { return _CanBound; }
+			set { _CanBound = value; }
+		}
+
+		private uint _IsExclusive;
+		public uint IsExclusive
+		{
+			get { return _IsExclusive; }
+			set { _IsExclusive = value; }
+		}
+
+		private uint _IsExpendable;
+		public uint IsExpendable
+		{
+			get { return _IsExpendable; }
+			set { _IsExpendable = value; }
+		}
+
+		private uint _ColdDownType;
+		public uint ColdDownType
+		{
+			get { return _ColdDownType; }
+			set { _ColdDownType = value; }
+		}
+
+		private uint _ColdDownTime;
+		public uint ColdDownTime
+		{
+			get { return _ColdDownTime; }
+			set { _ColdDownTime = value; }
+		}
+
+		private uint _CanDrop;
+		public uint CanDrop
+		{
+			get { return _CanDrop; }
+			set { _CanDrop = value; }
+		}
+
+		private uint _DecomposePackID;
+		public uint DecomposePackID
+		{
+			get { return _DecomposePackID; }
+			set { _DecomposePackID = value; }
+		}
+
+		private uint _IsMerge;
+		public uint IsMerge
+		{
+			get { return _IsMerge; }
+			set { _IsMerge = value; }
+		}
+
+		private uint _vec_num;
+		private string		[] _vec;
+		public string		[] vec
+		{
+			get { return _vec; }
+			set { _vec = value; }
 		}
 
 		public void Read(TReader reader)
 		{
 
-			reader.ReadStructBegin("item_table_s");
+			reader.ReadStructBegin("item_table");
 			{
-				if(reader.ReadFieldBegin("id"))
+				if(reader.ReadFieldBegin("ID"))
 				{
-					reader.Read(out this._id);
+					reader.Read(out this._ID);
 				}
-				reader.ReadFieldEnd("id");
+				reader.ReadFieldEnd("ID");
 			}
 
 			{
-				if(reader.ReadFieldBegin("name"))
+				if(reader.ReadFieldBegin("ItemName"))
 				{
-					reader.Read(out this._name);
+					reader.Read(out this._ItemName);
 				}
-				reader.ReadFieldEnd("name");
+				reader.ReadFieldEnd("ItemName");
 			}
 
 			{
-				if(reader.ReadFieldBegin("type"))
+				if(reader.ReadFieldBegin("Metempsychosis"))
+				{
+					reader.Read(out this._Metempsychosis);
+				}
+				reader.ReadFieldEnd("Metempsychosis");
+			}
+
+			{
+				if(reader.ReadFieldBegin("UseTime"))
+				{
+					reader.Read(out this._UseTime);
+				}
+				reader.ReadFieldEnd("UseTime");
+			}
+
+			{
+				if(reader.ReadFieldBegin("Bill"))
+				{
+					reader.Read(out this._Bill);
+				}
+				reader.ReadFieldEnd("Bill");
+			}
+
+			{
+				if(reader.ReadFieldBegin("ReplaceItem"))
+				{
+					reader.Read(out this._ReplaceItem);
+				}
+				reader.ReadFieldEnd("ReplaceItem");
+			}
+
+			{
+				if(reader.ReadFieldBegin("Medals"))
+				{
+					reader.Read(out this._Medals);
+				}
+				reader.ReadFieldEnd("Medals");
+			}
+
+			{
+				if(reader.ReadFieldBegin("Value"))
+				{
+					reader.Read(out this._Value);
+				}
+				reader.ReadFieldEnd("Value");
+			}
+
+			{
+				if(reader.ReadFieldBegin("ReserveMoneyFlag"))
+				{
+					reader.Read(out this._ReserveMoneyFlag);
+				}
+				reader.ReadFieldEnd("ReserveMoneyFlag");
+			}
+
+			{
+				if(reader.ReadFieldBegin("Quality"))
+				{
+					reader.Read(out this._Quality);
+				}
+				reader.ReadFieldEnd("Quality");
+			}
+
+			{
+				if(reader.ReadFieldBegin("ItemType"))
 				{
 						int e;
 						reader.Read(out e);
-						this._type = (item_type_e)e;
+						this._ItemType = (item_type)e;
 				}
 				else
 				{
 					string es;
 					reader.Read(out es);
-					this._type = (item_type_e)Enum.Parse(typeof(item_type_e), es);
+					this._ItemType = (item_type)Enum.Parse(typeof(item_type), es);
 				}
-				reader.ReadFieldEnd("type");
+				reader.ReadFieldEnd("ItemType");
+			}
+
+			{
+				if(reader.ReadFieldBegin("UseSingTime"))
+				{
+					reader.Read(out this._UseSingTime);
+				}
+				reader.ReadFieldEnd("UseSingTime");
+			}
+
+			{
+				if(reader.ReadFieldBegin("UserTarget"))
+				{
+					reader.Read(out this._UserTarget);
+				}
+				reader.ReadFieldEnd("UserTarget");
+			}
+
+			{
+				if(reader.ReadFieldBegin("CanMoved"))
+				{
+					reader.Read(out this._CanMoved);
+				}
+				reader.ReadFieldEnd("CanMoved");
+			}
+
+			{
+				if(reader.ReadFieldBegin("CanDeleted"))
+				{
+					reader.Read(out this._CanDeleted);
+				}
+				reader.ReadFieldEnd("CanDeleted");
+			}
+
+			{
+				if(reader.ReadFieldBegin("CanTrade"))
+				{
+					reader.Read(out this._CanTrade);
+				}
+				reader.ReadFieldEnd("CanTrade");
+			}
+
+			{
+				if(reader.ReadFieldBegin("CanSold"))
+				{
+					reader.Read(out this._CanSold);
+				}
+				reader.ReadFieldEnd("CanSold");
+			}
+
+			{
+				if(reader.ReadFieldBegin("CanStored"))
+				{
+					reader.Read(out this._CanStored);
+				}
+				reader.ReadFieldEnd("CanStored");
+			}
+
+			{
+				if(reader.ReadFieldBegin("CanLocked"))
+				{
+					reader.Read(out this._CanLocked);
+				}
+				reader.ReadFieldEnd("CanLocked");
+			}
+
+			{
+				if(reader.ReadFieldBegin("CanBound"))
+				{
+					reader.Read(out this._CanBound);
+				}
+				reader.ReadFieldEnd("CanBound");
+			}
+
+			{
+				if(reader.ReadFieldBegin("IsExclusive"))
+				{
+					reader.Read(out this._IsExclusive);
+				}
+				reader.ReadFieldEnd("IsExclusive");
+			}
+
+			{
+				if(reader.ReadFieldBegin("IsExpendable"))
+				{
+					reader.Read(out this._IsExpendable);
+				}
+				reader.ReadFieldEnd("IsExpendable");
+			}
+
+			{
+				if(reader.ReadFieldBegin("ColdDownType"))
+				{
+					reader.Read(out this._ColdDownType);
+				}
+				reader.ReadFieldEnd("ColdDownType");
+			}
+
+			{
+				if(reader.ReadFieldBegin("ColdDownTime"))
+				{
+					reader.Read(out this._ColdDownTime);
+				}
+				reader.ReadFieldEnd("ColdDownTime");
+			}
+
+			{
+				if(reader.ReadFieldBegin("CanDrop"))
+				{
+					reader.Read(out this._CanDrop);
+				}
+				reader.ReadFieldEnd("CanDrop");
+			}
+
+			{
+				if(reader.ReadFieldBegin("DecomposePackID"))
+				{
+					reader.Read(out this._DecomposePackID);
+				}
+				reader.ReadFieldEnd("DecomposePackID");
+			}
+
+			{
+				if(reader.ReadFieldBegin("IsMerge"))
+				{
+					reader.Read(out this._IsMerge);
+				}
+				reader.ReadFieldEnd("IsMerge");
 			}
 
 			{
 				reader.ReadVectorBegin();
 
-				if (reader.ReadFieldBegin("limit_list_num"))
+				if (reader.ReadFieldBegin("vec_num"))
 				{
-					reader.Read(out this._limit_list_num);
-					this._limit_list = new item_limit_u[this._limit_list_num];
+					reader.Read(out this._vec_num);
+					this._vec = new string[this._vec_num];
 				}
-				reader.ReadFieldEnd("limit_list_num");
+				reader.ReadFieldEnd("vec_num");
 
-				for(uint i = 0; i < Constants.ITEM_MAX_LIMIT; ++i)
+				for(uint i = 0; i < Constants.ITEM_VEC_NUM; ++i)
 				{
-					if(i == this._limit_list_num) break;
+					if(i == this._vec_num) break;
 
-					if(reader.ReadVectorElementBegin("limit_list", i))
+					if(reader.ReadVectorElementBegin("vec", i))
 					{
-					this._limit_list[i] = new item_limit_u();
-					this._limit_list[i].Read(reader, this.type				);
+						reader.Read(out this._vec[i]);
 					}
-					reader.ReadVectorElementEnd("limit_list", i);
+					reader.ReadVectorElementEnd("vec", i);
 				}
 				reader.ReadVectorEnd();
 			}
 
 
-			reader.ReadStructEnd("item_table_s");
+			reader.ReadStructEnd("item_table");
 		}
 
 		public void Write(TWriter writer)
 		{
 		
-			writer.WriteStructBegin("item_table_s");
+			writer.WriteStructBegin("item_table");
 			{
-				if(writer.WriteFieldBegin("id"))
+				if(writer.WriteFieldBegin("ID"))
 				{
-					writer.Write(this._id);
+					writer.Write(this._ID);
 				}
-				writer.WriteFieldEnd("id");
+				writer.WriteFieldEnd("ID");
 			}
 
 			{
-				if(writer.WriteFieldBegin("name"))
+				if(writer.WriteFieldBegin("ItemName"))
 				{
-					writer.Write(this._name);
+					writer.Write(this._ItemName);
 				}
-				writer.WriteFieldEnd("name");
+				writer.WriteFieldEnd("ItemName");
 			}
 
 			{
-				if(writer.WriteFieldBegin("type"))
+				if(writer.WriteFieldBegin("Metempsychosis"))
 				{
-					writer.Write((int)this._type);
+					writer.Write(this._Metempsychosis);
+				}
+				writer.WriteFieldEnd("Metempsychosis");
+			}
+
+			{
+				if(writer.WriteFieldBegin("UseTime"))
+				{
+					writer.Write(this._UseTime);
+				}
+				writer.WriteFieldEnd("UseTime");
+			}
+
+			{
+				if(writer.WriteFieldBegin("Bill"))
+				{
+					writer.Write(this._Bill);
+				}
+				writer.WriteFieldEnd("Bill");
+			}
+
+			{
+				if(writer.WriteFieldBegin("ReplaceItem"))
+				{
+					writer.Write(this._ReplaceItem);
+				}
+				writer.WriteFieldEnd("ReplaceItem");
+			}
+
+			{
+				if(writer.WriteFieldBegin("Medals"))
+				{
+					writer.Write(this._Medals);
+				}
+				writer.WriteFieldEnd("Medals");
+			}
+
+			{
+				if(writer.WriteFieldBegin("Value"))
+				{
+					writer.Write(this._Value);
+				}
+				writer.WriteFieldEnd("Value");
+			}
+
+			{
+				if(writer.WriteFieldBegin("ReserveMoneyFlag"))
+				{
+					writer.Write(this._ReserveMoneyFlag);
+				}
+				writer.WriteFieldEnd("ReserveMoneyFlag");
+			}
+
+			{
+				if(writer.WriteFieldBegin("Quality"))
+				{
+					writer.Write(this._Quality);
+				}
+				writer.WriteFieldEnd("Quality");
+			}
+
+			{
+				if(writer.WriteFieldBegin("ItemType"))
+				{
+					writer.Write((int)this._ItemType);
 				}
 				else
 				{
-					writer.Write(this._type.ToString());
+					writer.Write(this._ItemType.ToString());
 				}
-				writer.WriteFieldEnd("type");
+				writer.WriteFieldEnd("ItemType");
+			}
+
+			{
+				if(writer.WriteFieldBegin("UseSingTime"))
+				{
+					writer.Write(this._UseSingTime);
+				}
+				writer.WriteFieldEnd("UseSingTime");
+			}
+
+			{
+				if(writer.WriteFieldBegin("UserTarget"))
+				{
+					writer.Write(this._UserTarget);
+				}
+				writer.WriteFieldEnd("UserTarget");
+			}
+
+			{
+				if(writer.WriteFieldBegin("CanMoved"))
+				{
+					writer.Write(this._CanMoved);
+				}
+				writer.WriteFieldEnd("CanMoved");
+			}
+
+			{
+				if(writer.WriteFieldBegin("CanDeleted"))
+				{
+					writer.Write(this._CanDeleted);
+				}
+				writer.WriteFieldEnd("CanDeleted");
+			}
+
+			{
+				if(writer.WriteFieldBegin("CanTrade"))
+				{
+					writer.Write(this._CanTrade);
+				}
+				writer.WriteFieldEnd("CanTrade");
+			}
+
+			{
+				if(writer.WriteFieldBegin("CanSold"))
+				{
+					writer.Write(this._CanSold);
+				}
+				writer.WriteFieldEnd("CanSold");
+			}
+
+			{
+				if(writer.WriteFieldBegin("CanStored"))
+				{
+					writer.Write(this._CanStored);
+				}
+				writer.WriteFieldEnd("CanStored");
+			}
+
+			{
+				if(writer.WriteFieldBegin("CanLocked"))
+				{
+					writer.Write(this._CanLocked);
+				}
+				writer.WriteFieldEnd("CanLocked");
+			}
+
+			{
+				if(writer.WriteFieldBegin("CanBound"))
+				{
+					writer.Write(this._CanBound);
+				}
+				writer.WriteFieldEnd("CanBound");
+			}
+
+			{
+				if(writer.WriteFieldBegin("IsExclusive"))
+				{
+					writer.Write(this._IsExclusive);
+				}
+				writer.WriteFieldEnd("IsExclusive");
+			}
+
+			{
+				if(writer.WriteFieldBegin("IsExpendable"))
+				{
+					writer.Write(this._IsExpendable);
+				}
+				writer.WriteFieldEnd("IsExpendable");
+			}
+
+			{
+				if(writer.WriteFieldBegin("ColdDownType"))
+				{
+					writer.Write(this._ColdDownType);
+				}
+				writer.WriteFieldEnd("ColdDownType");
+			}
+
+			{
+				if(writer.WriteFieldBegin("ColdDownTime"))
+				{
+					writer.Write(this._ColdDownTime);
+				}
+				writer.WriteFieldEnd("ColdDownTime");
+			}
+
+			{
+				if(writer.WriteFieldBegin("CanDrop"))
+				{
+					writer.Write(this._CanDrop);
+				}
+				writer.WriteFieldEnd("CanDrop");
+			}
+
+			{
+				if(writer.WriteFieldBegin("DecomposePackID"))
+				{
+					writer.Write(this._DecomposePackID);
+				}
+				writer.WriteFieldEnd("DecomposePackID");
+			}
+
+			{
+				if(writer.WriteFieldBegin("IsMerge"))
+				{
+					writer.Write(this._IsMerge);
+				}
+				writer.WriteFieldEnd("IsMerge");
 			}
 
 			{
 				writer.WriteVectorBegin();
 
-				if (writer.WriteFieldBegin("limit_list_num"))
+				if (writer.WriteFieldBegin("vec_num"))
 				{
-					this._limit_list_num = (uint)this._limit_list.Length;
-					writer.Write(this._limit_list_num);
+					this._vec_num = (uint)this._vec.Length;
+					writer.Write(this._vec_num);
 				}
-				writer.WriteFieldEnd("limit_list_num");
+				writer.WriteFieldEnd("vec_num");
 
-				for(uint i = 0; i < Constants.ITEM_MAX_LIMIT; ++i)
+				for(uint i = 0; i < Constants.ITEM_VEC_NUM; ++i)
 				{
-					if(i == this._limit_list_num) break;
+					if(i == this._vec_num) break;
 
-					if(writer.WriteVectorElementBegin("limit_list", i))
+					if(writer.WriteVectorElementBegin("vec", i))
 					{
-						this._limit_list[i].Write(writer, this.type				);
+						writer.Write(this._vec[i]);
 					}
-					writer.WriteVectorElementEnd("limit_list", i);
+					writer.WriteVectorElementEnd("vec", i);
 				}
 				writer.WriteVectorEnd();
 			}
 
 
-			writer.WriteStructEnd("item_table_s");
+			writer.WriteStructEnd("item_table");
 		}
 	}
 

@@ -5,9 +5,11 @@
 
 //让我们首先来看一个网络协议的例子
 import "common/common.td"
+//重复包含一个文件， 并不会出错， 因为编译器只会展开第一个文件。
+import "common/common.td"
 
 
-struct login_req_s
+struct login_req
 {
 	string<MAX_NAME_LENGTH> name;
 	string<MAX_NAME_LENGTH> password;
@@ -15,76 +17,93 @@ struct login_req_s
 };
 
 typedef int32 bool_t;
-struct login_rsp_s
+struct login_rsp
 {
 		bool_t result;#0表示成功， 非0表示失败
 if(result == 0)	uint64 session_id;#可以使用条件判断与据来规定何时出现这个元素， 合法的运算符有==, !=, &这三种。
 };
 
-union message_body_u(message_id_e selector)
+union message_body(message_id selector)
 {
 E_MID_LOGIN_REQ:
-	login_req_s login_req;	
+	login_req login_req;	
 E_MID_LOGIN_RSP:
-	login_rsp_s login_rsp;
+	login_rsp login_rsp;
 };
 
 #定义网络协议
-struct message_s
+struct message
 {
-	message_id_e mid;
-	message_body_u body(mid);
+	message_id mid;
+	message_body body(mid);
 };
 
 
 /*
 	读取配置文件
 */
-enum tconnd_instance_level_e
+enum tconnd_instance_level
 {
 	e_low,
 	e_high,
 };
 const uint32 TONND_CONFIG_NUM = 1024;
 const uint32 IP_LENGTH = 16;
-struct tconnd_instance_config_s
+struct tconnd_instance_config
 {
-	tconnd_instance_level_e level;
+	tconnd_instance_level level;
 	string<IP_LENGTH> ip;
 	uint16 port;
 	uint32 backlog;
 	uint32 epoll_size;
 };
-struct tconnd_config_s
+struct tconnd_config
 {
 	string<MAX_NAME_LENGTH>					log_config;
-	vector<tconnd_instance_config_s, TONND_CONFIG_NUM> 	instance_config;
+	vector<tconnd_instance_config, TONND_CONFIG_NUM> 	instance_config;
 };
 
 
 /*
 	读取道具表格
 */
-enum item_type_e
+enum item_type
 {
-	e_crystal,
-	e_ectype,
-	e_other,
+	crystal,
+	other,
 };
 
-union item_limit_u(item_type_e selector)
+const uint32 ITEM_NAME_LENGTH = 1024;
+const uint32 ITEM_VEC_NUM = 10;
+struct item_table
 {
-e_crystal:	uint32 level;
-e_ectype:	uint32 mapid;
-e_other:	uint32 gold;
-};
-
-const uint32 ITEM_MAX_LIMIT = 10;
-struct item_table_s
-{
-	uint64 id;
-	string<MAX_NAME_LENGTH> name;
-	item_type_e type;
-	vector<item_limit_u, ITEM_MAX_LIMIT> limit_list(type);#一般来说不要把union类型作为数组， 这里只是演示下union类型是可以作为数组的。
+	uint32 						ID;
+	string<ITEM_NAME_LENGTH>			ItemName;
+	int32						Metempsychosis;
+	uint32						UseTime;
+	uint32						Bill;
+	uint16						ReplaceItem;
+	int32						Medals;
+	int32						Value;
+	int32						ReserveMoneyFlag;
+	uint8						Quality;
+	item_type					ItemType;
+	uint32						UseSingTime;
+	uint32						UserTarget;
+	uint32						CanMoved;
+	uint32						CanDeleted;
+	uint32						CanTrade;
+	uint32						CanSold;
+	uint32						CanStored;
+	uint32						CanLocked;
+	uint32						CanBound;
+	uint32						IsExclusive;
+	uint32						IsExpendable;
+	uint32						ColdDownType;
+	uint32						ColdDownTime;
+	uint32						CanDrop;
+	uint32						DecomposePackID;
+	uint32						IsMerge;
+	vector<string<ITEM_NAME_LENGTH>, ITEM_VEC_NUM>	vec;
 };
 
